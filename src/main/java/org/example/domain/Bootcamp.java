@@ -1,29 +1,71 @@
 package org.example.domain;
 
-import lombok.Getter;
-import lombok.Setter;
-
 import javax.persistence.Entity;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Objects;
+import java.util.Set;
 
-@Getter
-@Setter
+
 @Entity
 public class Bootcamp {
 
     private Long id;
     private String nome;
-    private LocalDate dataInicial;
-    private LocalDate dataFinal;
+    private String descricao;
+    private final LocalDate dataInicial = LocalDate.now();
+    private final LocalDate dataFinal = dataInicial.plusDays(45);
+    private Set<Dev> devsInscritos = new HashSet<>();
+    private Set<Conteudo> conteudos = new LinkedHashSet<>();
 
-    public Bootcamp() { }
 
-    public Bootcamp(Long id, String nome, LocalDate dataInicial, LocalDate dataFinal) {
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
         this.nome = nome;
-        this.dataInicial = dataInicial;
-        this.dataFinal = dataFinal;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public LocalDate getDataInicial() {
+        return dataInicial;
+    }
+
+    public LocalDate getDataFinal() {
+        return dataFinal;
+    }
+
+    public Set<Dev> getDevsInscritos() {
+        return devsInscritos;
+    }
+
+    public void setDevsInscritos(Set<Dev> devsInscritos) {
+        this.devsInscritos = devsInscritos;
+    }
+
+    public Set<Conteudo> getConteudos() {
+        return conteudos;
+    }
+
+    public void setConteudos(Set<Conteudo> conteudos) {
+        this.conteudos = conteudos;
     }
 
     @Override
@@ -31,21 +73,24 @@ public class Bootcamp {
         if (this == o) return true;
         if (!(o instanceof Bootcamp)) return false;
         Bootcamp bootcamp = (Bootcamp) o;
-        return Objects.equals(id, bootcamp.id);
+        return Objects.equals(getId(), bootcamp.getId()) && Objects.equals(getNome(), bootcamp.getNome()) && Objects.equals(getDescricao(), bootcamp.getDescricao()) && Objects.equals(getDataInicial(), bootcamp.getDataInicial()) && Objects.equals(getDataFinal(), bootcamp.getDataFinal()) && Objects.equals(getDevsInscritos(), bootcamp.getDevsInscritos()) && Objects.equals(getConteudos(), bootcamp.getConteudos());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(getId(), getNome(), getDescricao(), getDataInicial(), getDataFinal(), getDevsInscritos(), getConteudos());
     }
 
     @Override
     public String toString() {
         return "Bootcamp{" +
-                "id=" + id +
                 ", nome='" + nome + '\'' +
+                ", descricao='" + descricao + '\'' +
                 ", dataInicial=" + dataInicial +
                 ", dataFinal=" + dataFinal +
+                ", devsInscritos=" + devsInscritos +
+                ", conteudos=" + conteudos +
                 '}';
     }
 }
+
